@@ -4,6 +4,7 @@ import numpy as np
 import joblib
 from datetime import datetime
 import matplotlib.pyplot as plt
+from pathlib import Path  # <-- NEW
 
 # ===============================
 # PAGE CONFIG
@@ -57,19 +58,14 @@ footer {visibility: hidden;}
 """, unsafe_allow_html=True)
 
 # ===============================
-# LOAD MODEL & ENCODERS
+# LOAD MODEL & ENCODERS (STREAMLIT CLOUD SAFE)
 # ===============================
-BASE_DIR = os.path.dirname(__file__)
-model_path = os.path.join(BASE_DIR, "models", "best_model.pkl")
-city_encoder_path = os.path.join(BASE_DIR, "models", "labelencoder_city.pkl")
-location_encoder_path = os.path.join(BASE_DIR, "models", "labelencoder_location.pkl")
-scaler_path = os.path.join(BASE_DIR, "models", "scaler.pkl")
+BASE_DIR = Path(__file__).parent if "__file__" in globals() else Path.cwd()
 
-# Load models
-model = joblib.load(model_path)
-le_city = joblib.load(city_encoder_path)
-le_location = joblib.load(location_encoder_path)
-scaler = joblib.load(scaler_path)
+model = joblib.load(BASE_DIR / "models" / "best_model.pkl")
+scaler = joblib.load(BASE_DIR / "models" / "scaler.pkl")
+le_city = joblib.load(BASE_DIR / "models" / "labelencoder_city.pkl")
+le_location = joblib.load(BASE_DIR / "models" / "labelencoder_location.pkl")
 
 # ===============================
 # SIDEBAR
@@ -208,4 +204,3 @@ st.pyplot(fig)
 
 st.markdown("---")
 st.caption("Built with ❤️ using XGBoost & Streamlit")
-

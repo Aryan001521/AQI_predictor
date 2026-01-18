@@ -59,10 +59,17 @@ footer {visibility: hidden;}
 # ===============================
 # LOAD MODEL & ENCODERS
 # ===============================
-model = joblib.load("models/best_model.pkl")
-scaler = joblib.load("models/scaler.pkl")
-le_city = joblib.load("models/labelencoder_city.pkl")
-le_location = joblib.load("models/labelencoder_location.pkl")
+BASE_DIR = os.path.dirname(__file__)
+model_path = os.path.join(BASE_DIR, "models", "best_model.pkl")
+city_encoder_path = os.path.join(BASE_DIR, "models", "labelencoder_city.pkl")
+location_encoder_path = os.path.join(BASE_DIR, "models", "labelencoder_location.pkl")
+scaler_path = os.path.join(BASE_DIR, "models", "scaler.pkl")
+
+# Load models
+model = joblib.load(model_path)
+le_city = joblib.load(city_encoder_path)
+le_location = joblib.load(location_encoder_path)
+scaler = joblib.load(scaler_path)
 
 # ===============================
 # SIDEBAR
@@ -201,3 +208,4 @@ st.pyplot(fig)
 
 st.markdown("---")
 st.caption("Built with ❤️ using XGBoost & Streamlit")
+
